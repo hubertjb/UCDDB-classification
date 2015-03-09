@@ -16,7 +16,6 @@ Approaches to try out:
 Important points:
 - Cross-validation! Avoid overfitting
 - Features -> add ratios?
-- 
 
 """
 
@@ -116,39 +115,39 @@ def gridSearch_thenTest(clf, param_grid, cv, X_train, y_train, X_test, y_test):
     score = 'accuracy'
     
     print('# Tuning hyper-parameters for %s' %score)
-    print()
+    print('')
 
     clf = GridSearchCV(clf, param_grid, cv=cv, scoring=score, n_jobs=-1, verbose=True)
     clf.fit(X_train, y_train)
 
     print('Best parameters set found on development set:')
-    print()
+    print('')
     print(clf.best_estimator_)
-    print()
+    print('')
     print('Grid scores on development set:')
-    print()
+    print('')
     for params, mean_score, scores in clf.grid_scores_:
         print('%0.3f (+/-%0.03f) for %r'
               % (mean_score, scores.std() / 2, params))
-    print()
+    print('')
 
     print('Detailed classification report:')
-    print()
+    print('')
     print('The model is trained on the full development set.')
     print('The scores are computed on the full test set.')
-    print()
+    print('')
     
     y_pred = clf.predict(X_test)
     print(classification_report(y_test, y_pred))
     print('Accuracy: %0.3f'%accuracy_score(y_test, y_pred))
-    print()
+    print('')
     
     return clf
     
 if __name__ == '__main__':
     
-    #filepath = 'C:\\data\\ucddb\\drowsy_awake_7feat.mat' # Laptop
-    filepath = '/home/hubert/data/ucddb/preprocessed/drowsy_awake_7feat.mat' # Desktop (Ubuntu)
+    filepath = 'C:\\data\\ucddb\\drowsy_awake_7feat.mat' # Laptop
+    #filepath = '/home/hubert/data/ucddb/preprocessed/drowsy_awake_7feat.mat' # Desktop (Ubuntu)
     feats = loadData(filepath)    
     
 #    # TEST: Add new features...
@@ -183,7 +182,7 @@ if __name__ == '__main__':
     # 0. Random classification of data ##########################################
     
     print('Classifier 0: Random')
-    print()
+    print('')
     
     # see http://scikit-learn.org/stable/auto_examples/plot_permutation_test_for_classification.html#example-plot-permutation-test-for-classification-py
     clf = DummyClassifier(strategy='uniform',random_state=rng)
@@ -191,43 +190,43 @@ if __name__ == '__main__':
     y_pred = clf.predict(X_test)
     print(classification_report(y_test, y_pred))
     print('Accuracy: %0.3f'%accuracy_score(y_test, y_pred))
-    print()
+    print('')
     
     # 1. LDA ##################################################################    
     
-#    print('Classifier 1: LDA')
-#    print()
-#    
-#    clf = lda.LDA()
-#    
-#    # Since no hyperparameter search is necessary with LDA, no need to cross-validate
-#    #trainScoresLDA = cross_validation.cross_val_score(clf, X_train, y_train, cv=5, verbose=5)    
-#    
-#    clf.fit(X_train, y_train)
-#    y_pred = clf.predict(X_test)
-#    print(classification_report(y_test, y_pred)) 
-#    print('Accuracy: %0.3f'%accuracy_score(y_test, y_pred))   
-#    print()
+    print('Classifier 1: LDA')
+    print('')
+    
+    clf = lda.LDA()
+    
+    # Since no hyperparameter search is necessary with LDA, no need to cross-validate
+    #trainScoresLDA = cross_validation.cross_val_score(clf, X_train, y_train, cv=5, verbose=5)    
+    
+    clf.fit(X_train, y_train)
+    y_pred = clf.predict(X_test)
+    print(classification_report(y_test, y_pred)) 
+    print('Accuracy: %0.3f'%accuracy_score(y_test, y_pred))   
+    print('')
 
     
     # 2. Logistic regression ##################################################
     
-#    print('Classifier 2: Logistic regression')
-#    print()    
-#    
-#    clf = linear_model.LogisticRegression(random_state=rng)
-#    
-#    param_grid = [{'C': [0.01, 0.1, 1, 10, 100], 'penalty': ['l2', 'l1']},]
-#
-#    bestLRclf = gridSearch_thenTest(clf, param_grid, cv, X_train, y_train, X_test, y_test)
-#    
-#    print()
+    print('Classifier 2: Logistic regression')
+    print('')    
+    
+    clf = linear_model.LogisticRegression(random_state=rng)
+    
+    param_grid = [{'C': [0.01, 0.1, 1, 10, 100], 'penalty': ['l2', 'l1']},]
+
+    bestLRclf = gridSearch_thenTest(clf, param_grid, cv, X_train, y_train, X_test, y_test)
+    
+    print('')
 
     
     # 3. SVM  #################################################################
     
 #    print('Classifier 3: SVM')
-#    print()    
+#    print('')    
 #    
 #    # TODO: Try LinearSVM with l2 loss (reduces capacity and increases convergence speed)
 #    
@@ -239,7 +238,7 @@ if __name__ == '__main__':
 #
 #    bestSVMclf = gridSearch_thenTest(clf, param_grid, cv, X_train, y_train, X_test, y_test)
 #    
-#    print()
+#    print('')
 #
 ##    # Cross-validate
 ##    svmResults = cross_validation.cross_val_score(clf, feats.iloc[:,:-1], feats.label, cv=5, verbose=5)
@@ -249,7 +248,7 @@ if __name__ == '__main__':
     # TODO: Make this one work!    
     
 #    print('Classifier 4: GMM')
-#    print()
+#    print('')
 #    
 #    clf = mixture.GMM(n_components=2, random_state=rng)
 #    param_grid = [{'covariance_type': ['spherical', 'tied', 'diag', 'full']}]
@@ -258,64 +257,64 @@ if __name__ == '__main__':
 #    clf.fit(X_train)
 #    
 #    print('Best parameters set found on development set:')
-#    print()
+#    print('')
 #    print(clf.best_estimator_)
-#    print()
+#    print('')
 #    print('Grid scores on development set:')
-#    print()
+#    print('')
 #    for params, mean_score, scores in clf.grid_scores_:
 #        print('%0.3f (+/-%0.03f) for %r'
 #              % (mean_score, scores.std() / 2, params))
-#    print()
+#    print('')
 #
 #    print('Detailed classification report:')
-#    print()
+#    print('')
 #    print('The model is trained on the full development set.')
 #    print('The scores are computed on the full test set.')
-#    print()
+#    print('')
 #    
 #    y_pred = clf.predict(X_test)
 #    print(classification_report(y_test, y_pred))
 #    print('Accuracy: %0.3f'%accuracy_score(y_test, y_pred))
-#    print()
+#    print('')
 #    
-#    print()
+#    print('')
 
     # 5. Random forest ########################################################
 
 #    print('Classifier 5: Random Forest')
-#    print()
+#    print('')
 #
 #    clf = ensemble.RandomForestClassifier(random_state=rng)
 #    param_grid = [{'n_estimators': [300]}]
 #    
 #    bestRFclf = gridSearch_thenTest(clf, param_grid, cv, X_train, y_train, X_test, y_test)
 #    
-#    print()
+#    print('')
 
     # 6. Neural networks ######################################################
     # a) Vanilla NN (~1-3 layers)
     # b) Autoencoder pre-training?
-    # c) Convolutions?
+    # c) Convolutions -> Makes no sense on features... should be on raw data
 
     # 7. K-nearest neighbors ##################################################
     # Since the data is not too high-dimensional, this might work well
     # TODO: Still, try with as few features as possible
 
 #    print('Classifier 7: K-Nearest Neighbors')
-#    print()    
+#    print('')
 #
 #    clf = neighbors.KNeighborsClassifier()
 #    param_grid = [{'n_neighbors': range(26,101,5)}] #, 'weights': ['uniform','distance']}]
 #
 #    bestkNNclf = gridSearch_thenTest(clf, param_grid, cv, X_train, y_train, X_test, y_test)
 #    
-#    print()
+#    print('')
 
     # 8. Naive Bayes ##########################################################
 
 #    print('Classifier 8: Naive Bayes')
-#    print()    
+#    print('')
 #    
 #    clf = naive_bayes.GaussianNB()
 #    
@@ -323,14 +322,11 @@ if __name__ == '__main__':
 #    y_pred = clf.predict(X_test)
 #    print(classification_report(y_test, y_pred)) 
 #    print('Accuracy: %0.3f'%accuracy_score(y_test, y_pred))   
-#    print()
-    
+#    print('')
 
-    # 9. Ensemble (bagging, adaboost) #########################################
-
-
-    # 10. Gradient Boosting Classifier ########################################
+    # 9. Gradient Boosting Classifier ########################################
     # This was the best classifier in the Kaggle BCI challenge...
+    # Looks like AdaBoost, but with Regression Trees (similar to Random Forests)
 
 
 # Once the best model is selected:
