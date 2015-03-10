@@ -38,8 +38,6 @@ from sklearn.metrics import accuracy_score, classification_report
 from sklearn.dummy import DummyClassifier
 from sklearn.externals import joblib
 
-#import SCIKIT!!!!!!!!!!!!
-
 def loadData(filepath):
     """Load preprocessed data contained in a .mat file.
     
